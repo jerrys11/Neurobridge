@@ -1,33 +1,67 @@
-# NeuroAgency 🚀
-### AI-Powered Micro-Agencies for Neurodivergent Professionals
-*A Submission Concept for the $2M Build with Gemini XPRIZE*
+# NeuroBridge 🍃
 
-Welcome to the **NeuroAgency** workspace! This platform is designed to empower adults with autism to launch and operate their own freelance micro-agencies (specializing in high-focus tasks like QA testing, data labeling, document analysis, research, and translation) while leveraging Gemini-powered AI agents to handle client management, project breakdown, business communication, and invoicing.
+**AI workplace-communication copilot for autistic professionals.**
+NeuroBridge takes vague, idiom-filled workplace messages (email, Slack, meeting notes) and translates them into plain language: the literal meaning, the hidden expectations, a step-by-step task checklist with deadlines, tone-matched reply drafts, a jargon glossary, and sensory pacing tips.
 
----
-
-## 📂 Project Structure
-
-This directory will contain the codebase for the NeuroAgency platform:
-*   `/src` - Core application source files (frontend UI, backend API, AI Agent wrappers).
-*   `/tests` - Automated tests to verify AI agent actions and user flows.
-*   `/config` - Configuration for the Gemini API and agent personas.
+*A submission to the [Build with Gemini XPRIZE](https://www.geminixprize.com/) — Category: Education & Human Potential.*
 
 ---
 
-## 🛠️ Getting Started
+## Why
 
-Once the concept is fully aligned through our interview, we will configure this project to run a development server.
+Autistic adults face persistent under- and unemployment, and ambiguous workplace communication is one of the most-cited barriers. Existing tools are consumer self-help apps; NeuroBridge is employer-paid, requires no diagnosis disclosure, and works at the moment a confusing message arrives.
 
-### Proposed Stack:
-1. **Frontend:** React / Vite or Next.js (clean, accessible, distraction-free UI designed for autistic users).
-2. **AI Backend:** Node.js / Express with Google's Gemini SDK.
-3. **Database:** SQLite or PostgreSQL for managing freelancers, clients, and active gigs.
+## How it works
 
----
+```
+Web app (React/Vite)
+   → NeuroBridge API on Google Cloud Run (Express, Node 22)
+       → Gemini (2.5 Flash, with model fallback) — every analysis        ← satisfies the Gemini/LLM rule
+       → Firestore — users, signups, analysis logs                       ← Google Cloud product
+       → Structured stdout logs (Cloud Run) — production evidence
+```
 
-## 🎯 Current Step: Concept Alignment
+- **All AI calls are server-side.** The Gemini API key never leaves the backend.
+- Every analysis is logged (model used, latency, anonymized client id) — this is the production-evidence trail required by the competition rules.
+- Anonymous users get a rate-limited free tier; the **Join the pilot** flow captures emails for personal workspaces and employer pilots.
 
-We are currently aligning on the exact operational flow and business model using the `/grill-me` process.
-*   Read the project brief in the artifact folder: [xprize_autism_employment_brief.md](file:///C:/Users/Jerry/.gemini/antigravity/brain/593d55d7-7a6f-4df2-a819-9a755080e1c7/xprize_autism_employment_brief.md)
-*   Run the `/grill-me` command in the chat to define the role of the AI agent, pricing, and launch strategy with Jerry and Sophie.
+## Repository layout
+
+```
+frontend/   React + Vite app (sensory-friendly UI: muted palette, dark mode, text scaling, reduced-motion support)
+backend/    Express API: /api/analyze, /api/signup, /api/health, /api/stats — serves the built frontend in production
+Dockerfile  Multi-stage build → single Cloud Run service
+```
+
+## Run locally
+
+```bash
+# backend (terminal 1)
+cd backend && npm install
+GEMINI_API_KEY=your_key npm run dev          # http://localhost:8080
+
+# frontend (terminal 2)
+cd frontend && npm install
+echo "VITE_API_URL=http://localhost:8080" > .env.local
+npm run dev                                   # http://localhost:5173
+```
+
+## Deploy (Cloud Run)
+
+```bash
+gcloud run deploy neurobridge \
+  --source . \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --set-env-vars GEMINI_API_KEY=YOUR_KEY
+```
+
+The single service serves both the API and the built frontend.
+
+## Project history (XPRIZE disclosure)
+
+NeuroBridge was newly created after the start of the Hackathon Submission Period (May 19, 2026), scaffolded with Google Antigravity using standard React/Vite tooling. No pre-existing proprietary code was used.
+
+## Privacy
+
+Messages submitted for analysis are processed to generate the result and logged in anonymized form (length, urgency, latency — not content). Message content is never used to train AI models.

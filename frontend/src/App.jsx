@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChatSimulator from './components/ChatSimulator';
 import CopilotSidebar from './components/CopilotSidebar';
 import SettingsModal from './components/SettingsModal';
@@ -6,25 +6,16 @@ import { analyzeMessage } from './utils/geminiService';
 import './App.css';
 
 export default function App() {
-  const [apiKey, setApiKey] = useState('');
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isJoinOpen, setIsJoinOpen] = useState(false);
   const [theme, setTheme] = useState('light');
   const [textSize, setTextSize] = useState('normal');
-  
-  // Interpretation State
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [analysisData, setAnalysisData] = useState(null);
+  const resultsRef = useRef(null);
 
-  // Load API key, theme, and text size from localStorage on startup
   useEffect(() => {
-    const savedKey = localStorage.getItem('neurobridge_api_key');
-    if (savedKey) {
-      setApiKey(savedKey);
-    } else {
-      setIsSettingsOpen(true);
-    }
-
     const savedTheme = localStorage.getItem('neurobridge_theme') || 'light';
     setTheme(savedTheme);
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -33,12 +24,6 @@ export default function App() {
     setTextSize(savedSize);
     document.documentElement.setAttribute('data-size', savedSize);
   }, []);
-
-  const handleSaveApiKey = (newKey) => {
-    setApiKey(newKey);
-    localStorage.setItem('neurobridge_api_key', newKey);
-    setError(null);
-  };
 
   const toggleTheme = () => {
     const nextTheme = theme === 'light' ? 'dark' : 'light';
@@ -49,22 +34,23 @@ export default function App() {
 
   const toggleTextSize = () => {
     const sizes = ['normal', 'large', 'xl'];
-    const currentIndex = sizes.indexOf(textSize);
-    const nextIndex = (currentIndex + 1) % sizes.length;
-    const nextSize = sizes[nextIndex];
+    const nextSize = sizes[(sizes.indexOf(textSize) + 1) % sizes.length];
     setTextSize(nextSize);
     localStorage.setItem('neurobridge_text_size', nextSize);
     document.documentElement.setAttribute('data-size', nextSize);
   };
+
   const handleInterpret = async (message) => {
     setIsLoading(true);
     setError(null);
     try {
-      if (!apiKey) {
-        throw new Error("No Gemini API Key found. Please open Settings (⚙️) and enter your key.");
-      }
-      const result = await analyzeMessage(message, apiKey);
+      const result = await analyzeMessage(message);
       setAnalysisData(result);
+      // Bring results into view, respecting reduced-motion preferences.
+      requestAnimationFrame(() => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        resultsRef.current?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      });
     } catch (err) {
       setError(err);
       setAnalysisData(null);
@@ -77,69 +63,67 @@ export default function App() {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <div className="brand-section">
-          <h1>NeuroBridge 🍃</h1>
+          <h1>NeuroBridge <span aria-hidden="true">🍃</span></h1>
           <p>AI Workplace Communication Copilot for Autistic Professionals</p>
         </div>
-        
+
         <div className="header-controls">
-          <button 
-            type="button" 
-            className="btn-icon" 
+          <button
+            type="button"
+            className="btn-icon"
             onClick={toggleTextSize}
-            title="Adjust Text Size (A / A⁺ / A⁺⁺)"
+            title="Adjust Text Size (A / A+ / A++)"
             aria-label="Adjust text size"
             style={{ fontWeight: 'bold', fontSize: '0.95rem' }}
           >
             {textSize === 'normal' ? 'A' : textSize === 'large' ? 'A⁺' : 'A⁺⁺'}
           </button>
-          <button 
-            type="button" 
-            className="btn-icon" 
+          <button
+            type="button"
+            className="btn-icon"
             onClick={toggleTheme}
             title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
             aria-label="Toggle theme"
           >
-            {theme === 'light' ? '🌙' : '☀️'}
+            <span aria-hidden="true">{theme === 'light' ? '🌙' : '☀️'}</span>
           </button>
-          <button 
-            type="button" 
-            className="btn-icon" 
-            onClick={() => setIsSettingsOpen(true)}
-            title="Open Settings"
-            aria-label="Open settings"
+          <button
+            type="button"
+            className="btn btn-primary btn-join"
+            onClick={() => setIsJoinOpen(true)}
           >
-            ⚙️
+            Join the pilot
           </button>
         </div>
       </header>
 
       <main className="dashboard-main">
         <section className="column-left">
-          <ChatSimulator 
-            onInterpret={handleInterpret} 
-            isLoading={isLoading} 
+          <ChatSimulator
+            onInterpret={handleInterpret}
+            isLoading={isLoading}
           />
         </section>
-        
-        <section className="column-right">
-          <CopilotSidebar 
-            data={analysisData} 
-            isLoading={isLoading} 
-            error={error} 
-            isKeyConfigured={!!apiKey}
+
+        <section className="column-right" ref={resultsRef}>
+          <CopilotSidebar
+            data={analysisData}
+            isLoading={isLoading}
+            error={error}
           />
         </section>
       </main>
 
       <footer style={{ marginTop: '3rem', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-        <p>NeuroBridge — A project built for the Build with Gemini XPRIZE. All keys and data are kept secure in local storage.</p>
+        <p>
+          NeuroBridge — built for the Build with Gemini XPRIZE. Messages you analyze are processed
+          securely and never used to train AI models.
+        </p>
       </footer>
 
-      <SettingsModal 
-        isOpen={isSettingsOpen} 
-        onClose={() => setIsSettingsOpen(false)} 
-        currentApiKey={apiKey} 
-        onSave={handleSaveApiKey} 
+      <SettingsModal
+        isOpen={isJoinOpen}
+        onClose={() => setIsJoinOpen(false)}
       />
     </div>
   );

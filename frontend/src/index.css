@@ -90,3 +90,53 @@ button, input, textarea {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* ===== Accessibility & new-feature additions (June 2026) ===== */
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 3px solid var(--secondary-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Checklist items: label is the full-row hit target */
+.checklist-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Deadline badge */
+.deadline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--accent-light);
+  color: var(--text-primary);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.deadline-note { font-weight: 400; font-style: italic; color: var(--text-muted); }
+
+/* Assumed-context list */
+.assumed-list { margin: 0.25rem 0 0; padding-left: 1.2rem; }
+.assumed-item { margin-bottom: 0.4rem; color: var(--text-secondary); }
+
+/* Header join button sizing */
+.btn-join { padding: 0.45rem 1rem; font-size: 0.9rem; }
