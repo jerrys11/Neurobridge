@@ -1,13 +1,13 @@
 # Meeting & Demo Preparation Guide: Lambs Farm
-## Strategic Roadmap for Alyzia (BCBA Program Alignment)
+## Strategic Roadmap for Alycia (BCBA Program Alignment)
 
-This guide helps prepare Jerry and Sophie for their meeting with **Alyzia** to demonstrate NeuroBridge and align it with Lambs Farm's vocational and Behavior Analysis (BCBA) goals.
+This guide helps prepare Jerry and Sophie for their meeting with **Alycia** to demonstrate NeuroBridge and align it with Lambs Farm's vocational and Behavior Analysis (BCBA) goals.
 
 ---
 
 ## 🎯 1. Key Objectives of the Call
 
-1.  **Listen First:** Let Alyzia explain the specific communication challenges they observe when participants transition to community employment (e.g., misunderstanding manager tone, getting overwhelmed by shifts in routine).
+1.  **Listen First:** Let Alycia explain the specific communication challenges they observe when participants transition to community employment (e.g., misunderstanding manager tone, getting overwhelmed by shifts in routine).
 2.  **Speak the BCBA Language:** Align NeuroBridge with evidence-based practices in behavior analysis (see Section 2).
 3.  **Show the Customized Demo:** Walk through a live translation of scenarios matching their own operations (Bakery, Pet Center, Cafe).
 4.  **Propose the Pilot:** Secure a commitment for a free, 3-to-5 user pilot program starting next month.
@@ -16,7 +16,7 @@ This guide helps prepare Jerry and Sophie for their meeting with **Alyzia** to d
 
 ## 🧠 2. Aligning with Behavior Analysis (BCBA)
 
-As a Board Certified Behavior Analyst (BCBA), Alyzia will immediately recognize the therapeutic framework of NeuroBridge. You can highlight how the tool automates standard behavioral interventions:
+As a Board Certified Behavior Analyst (BCBA), Alycia will immediately recognize the therapeutic framework of NeuroBridge. You can highlight how the tool automates standard behavioral interventions:
 
 *   **Automated "Task Analysis":** In behavior analysis, a complex task is broken down into small, teachable steps (e.g. washing hands, packaging bread). NeuroBridge uses Gemini to perform an **instant Task Analysis** on any custom, vague text instruction, turning it into a structured, numbered checklist.
 *   **Visual Schedules:** Providing clear, static lists is a core method for reducing task transition anxiety.
@@ -45,7 +45,7 @@ Open the live link: **[https://neurobridge-kappa.vercel.app](https://neurobridge
 
 ## 📋 4. The Proposed Pilot Rollout
 
-If Alyzia is interested, pitch the pilot as a **low-friction collaboration**:
+If Alycia is interested, pitch the pilot as a **low-friction collaboration**:
 
 *   **Size:** 3 to 5 vocational participants.
 *   **Location:** Bakery or Cafe (or whichever business has the most active digital updates).
