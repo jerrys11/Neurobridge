@@ -81,10 +81,10 @@ export async function analyzeMessage(message) {
           generationConfig: { responseMimeType: "application/json" },
         }),
       });
-
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         const errorMessage = errorData.error?.message || `HTTP ${response.status}`;
+        console.warn(`Model ${model} failed: ${errorMessage} (status: ${response.status})`);
         if (response.status === 401 || response.status === 403) {
           const err = new Error(`Gemini auth error: ${errorMessage}`);
           err.status = 502;

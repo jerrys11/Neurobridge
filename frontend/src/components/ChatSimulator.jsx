@@ -1,34 +1,34 @@
 import React, { useState } from 'react';
 
-// Preset confusing corporate templates
+// Preset confusing vocational templates (customized for Lambs Farm demo)
 const TEMPLATES = [
   {
-    id: 'love',
-    title: '💬 Vague Revision ("Needs Some Love")',
-    sender: 'Jane (Design Lead)',
-    context: 'Requested feedback on a web project page.',
-    message: "Hey, whenever you get a chance, could you take a look at the dashboard page? It's looking a bit busy and might need some love before we show the client tomorrow afternoon. Also, let's keep an eye on the load times. Thanks!"
+    id: 'bakery',
+    title: '🥐 Bakery Packaging ("Looks Sharp")',
+    sender: 'Chef Sarah (Bakery Manager)',
+    context: 'Requested packaging checks for the morning order.',
+    message: "Hey Alex, let's make sure the packaging for the breakfast bread order looks sharp and professional before the delivery truck leaves at 9:00 AM. Give them a quick inspection. Thanks!"
   },
   {
-    id: 'ducks',
-    title: '📧 Meeting Follow-Up ("Ducks in a Row")',
-    sender: 'Mark (Product Manager)',
-    context: 'Post-meeting alignment instructions.',
-    message: "Hey team, regarding the launch roadmap, I think we should circle back on the database migrations. We need to make sure we're not putting the cart before the horse. Let's touch base next week. Let's make sure our ducks are in a row."
+    id: 'pet-center',
+    title: '🐶 Pet Shop Setup ("Ducks in a Row")',
+    sender: 'Jim (Pet Center Lead)',
+    context: 'Preparing the shop floor for the weekend.',
+    message: "Hi team, regarding the inventory check, we need to circle back on the guinea pig runs and check the food inventory before the weekend. Let's make sure our ducks are in a row before Saturday opening."
   },
   {
-    id: 'yesterday',
-    title: '🔥 High-Stress Fire Drill ("Like Yesterday")',
-    sender: 'Sarah (VP of Sales)',
-    context: 'An urgent request sent mid-afternoon.',
-    message: "Hey, can you do me a quick favor? I need a list of all active enterprise trials. Need this like yesterday for a call. Sorry for the fire drill! You're a lifesaver!"
+    id: 'cafe',
+    title: '🥞 Café Shift Prep ("Like Yesterday")',
+    sender: 'Manager Lisa (Café Restaurant)',
+    context: 'An urgent request sent for Sunday Brunch prep.',
+    message: "Hey, can you do me a quick favor? We're going to be slammed for Sunday brunch prep. Can you come in a bit early? Need you here like yesterday. Sorry for the fire drill! You're a lifesaver!"
   },
   {
-    id: 'fruit',
-    title: '📋 Unclear Priorities ("Low-Hanging Fruit")',
-    sender: 'David (Engineering Manager)',
-    context: 'Assigning sprint tasks.',
-    message: "We have a lot of items on our plate, but let's grab the low-hanging fruit first. I added some tasks to the backlog board. Go ahead and pick up whatever makes sense. Let's try to get some quick wins."
+    id: 'garden',
+    title: '🌿 Garden Center ("Low-Hanging Fruit")',
+    sender: 'Dave (Greenhouse Manager)',
+    context: 'Daily plant maintenance tasks.',
+    message: "We have a lot of items on our plate today, but let's grab the low-hanging fruit first. I put some flats of annuals in the middle aisle. Go ahead and get them looking fresh."
   }
 ];
 
