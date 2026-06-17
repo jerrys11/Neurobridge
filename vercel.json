@@ -1,0 +1,7 @@
+{
+  "build": {
+    "env": {
+      "VITE_API_URL": "https://neurobridge-83464734575.us-central1.run.app"
+    }
+  }
+}
